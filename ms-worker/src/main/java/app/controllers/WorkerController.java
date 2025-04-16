@@ -2,6 +2,10 @@ package app.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,23 +20,29 @@ import app.services.WorkerService;
 @RequestMapping("/workers")
 public class WorkerController {
 
-    private final WorkerService workerService;
-    
-    public WorkerController(WorkerService workerService) {
-        this.workerService = workerService;
-    }
+	private static Logger logger = LoggerFactory.getLogger(WorkerController.class);
 
-    @GetMapping
-    public ResponseEntity<List<WorkerDto>> getAllWorkers() {
-        return ResponseEntity.ok(this.workerService.getAllWorkers());
-    }
+	@Autowired
+	private Environment environment;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<WorkerDto> getById(@PathVariable Long id) {
-        WorkerDto worker = this.workerService.getWorkerById(id);
-        if (worker == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(worker);
-    }
+	private final WorkerService workerService;
+
+	public WorkerController(WorkerService workerService) {
+		this.workerService = workerService;
+	}
+
+	@GetMapping
+	public ResponseEntity<List<WorkerDto>> getAllWorkers() {
+		return ResponseEntity.ok(this.workerService.getAllWorkers());
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<WorkerDto> getById(@PathVariable Long id) {
+		logger.info("PORT:" + environment.getProperty("local.server.ports"));
+		WorkerDto worker = this.workerService.getWorkerById(id);
+		if (worker == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(worker);
+	}
 }
