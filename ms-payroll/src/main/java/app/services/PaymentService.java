@@ -1,31 +1,23 @@
 package app.services;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
+import app.feign.WorkerFeignClient;
 import app.models.Payment;
 import app.models.Worker;
 
 @Service
 public class PaymentService {
 
-	private final RestTemplate restTemplate;
-	@Value("${ms-workers.host}")
-	private String workerHost;
+	private final WorkerFeignClient feignClient;
 
-	public PaymentService(RestTemplate restTemplate) {
-		this.restTemplate = restTemplate;
+	public PaymentService(WorkerFeignClient feignClient) {
+		this.feignClient = feignClient;
 	}
 
 	public Payment getPayment(long workerId, int days) {
-		Map<String, String> uriVariables = new HashMap<>();
-		uriVariables.put("id", String.valueOf(workerId));
 
-		Worker worker = this.restTemplate.getForObject(workerHost + "/workers/{id}", Worker.class, uriVariables);
+		Worker worker = this.feignClient.getById(workerId).getBody();
 
 		if (worker != null) {
 			return new Payment(worker.getName(), worker.getDailyIncome(), days);
