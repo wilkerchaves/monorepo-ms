@@ -6,6 +6,7 @@ import org.mapstruct.factory.Mappers;
 import com.models.WorkerDto;
 
 import app.entities.Worker;
+import org.mapstruct.Mapping;
 
 @Mapper
 public interface WorkerMapper {
@@ -13,6 +14,8 @@ public interface WorkerMapper {
     WorkerMapper INSTANCE = Mappers.getMapper(WorkerMapper.class);
     
     WorkerDto convertToDto(Worker worker);
-    Worker convertToEntity(WorkerDto workerDto);
+    
+    @Mapping(target = "id", ignore = true)
+	Worker convertToEntity(WorkerDto workerDto);
 
 }
