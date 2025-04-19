@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ public class WorkerController {
 	private static Logger logger = LoggerFactory.getLogger(WorkerController.class);
 
 	@Autowired
-	private Environment environment;
+	private ServerProperties properties;
 
 	private final WorkerService workerService;
 
@@ -38,7 +39,7 @@ public class WorkerController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<WorkerDto> getById(@PathVariable Long id) {
-		logger.info("PORT:" + environment.getProperty("local.server.ports"));
+		logger.info("PORT:" + this.properties.getPort());
 		WorkerDto worker = this.workerService.getWorkerById(id);
 		if (worker == null) {
 			return ResponseEntity.notFound().build();
