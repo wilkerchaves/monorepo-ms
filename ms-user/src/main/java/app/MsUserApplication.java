@@ -23,7 +23,7 @@ public class MsUserApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		List<User> users = this.userRepository.findAll();
-		users.forEach(user -> System.out.println(user));
+		System.out.println(users);
 	}
 
 }
