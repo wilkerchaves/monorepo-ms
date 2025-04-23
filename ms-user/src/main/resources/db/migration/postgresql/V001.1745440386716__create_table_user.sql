@@ -14,7 +14,7 @@ create table if not exists tb_role (
 );
 
 create table if not exists tb_user_role (
-	user_id bigint not null;
+	user_id bigint not null,
 	roles_id bigint not null,
 	primary key (roles_id, user_id)
 );
@@ -22,10 +22,9 @@ create table if not exists tb_user_role (
 alter table if exists tb_user_role 
 	add constraint role_id_constraint 
     foreign key (roles_id) 
-    references tb_role
+    references tb_role;
     
 alter table if exists tb_user_role 
 	add constraint user_id_constraint 
     foreign key (user_id) 
-    references tb_user
-
+    references tb_user;
