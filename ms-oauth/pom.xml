@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.dev</groupId>
-	<artifactId>ms-user</artifactId>
+	<artifactId>ms-oauth</artifactId>
 	<version>0.0.1</version>
-	<name>ms-user</name>
-	<description>User microservice</description>
+	<name>ms-oauth</name>
+	<description>Authorization microservice</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -33,24 +33,17 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-		    <groupId>org.postgresql</groupId>
-		    <artifactId>postgresql</artifactId>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
@@ -70,25 +63,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.flywaydb</groupId>
-				<artifactId>flyway-maven-plugin</artifactId>
-				<configuration>
-					<url>jdbc:postgresql://localhost:5432/dev</url>
-					<user>postgres</user>
-					<password>12345678</password>
-					<locations>
-						<location>filesystem:src/main/resources/db/migration/postgresql</location>
-					</locations>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.flywaydb</groupId>
-						<artifactId>flyway-database-postgresql</artifactId>
-						<version>11.6.0</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
