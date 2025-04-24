@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.entities.User;
@@ -30,6 +31,12 @@ public class UserController {
 	@GetMapping("/id")
 	public ResponseEntity<User> getByID(Long id) {
 		return ResponseEntity.ok(this.userService.getById(id));
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity<User> getByEmail(@RequestParam String email) {
+		User user = this.userService.findByEmail(email);
+		return ResponseEntity.ok(user);
 	}
 
 	@PostMapping
